@@ -50,7 +50,7 @@ function App() {
           newWord = resultItem.join("");
         }
         newResult.push(newWord);
-        console.log(newWord);
+        console.log(newWord,_newAdd,_newRemove);
       }
     });
 
