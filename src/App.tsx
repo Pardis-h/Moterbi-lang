@@ -4,7 +4,7 @@ import "./App.css";
 function App() {
   const [text, setText] = useState<string>("Please enter your text");
   const [newText, setNewText] = useState<string | any>("");
-  
+
   const getText = (e: any) => {
     setText(e.target.value);
     setNewText("");
@@ -56,7 +56,7 @@ function App() {
           newWord = resultItem.join("");
         }
         newResult.push(newWord);
-        // console.log(newWord,_newAdd,_newRemove);
+        console.log(newWord,_newAdd,_newRemove);
       }
     });
     setNewText(newResult.join(""));
