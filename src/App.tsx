@@ -30,12 +30,12 @@ function App() {
         newResult.push(newWord);
         console.log(newWord);
       } else {
-        let newRemove: string[] = resultItem.shift();
-        let newAdd: string[];
+        let _newRemove: string[] | any = resultItem.shift();
+        let _newAdd: string[] | any;
         if (resultItem[0] == "h") {
-          newRemove = resultItem.shift();
+          _newRemove = resultItem.shift();
           resultItem[0] = resultItem[0].toUpperCase();
-          newAdd = resultItem.push(
+          _newAdd = resultItem.push(
             "e",
             newFirstWord.toLowerCase(),
             "h",
@@ -46,7 +46,7 @@ function App() {
           console.log(newWord);
         } else {
           resultItem[0] = resultItem[0].toUpperCase();
-          newAdd = resultItem.push("e", newFirstWord.toLowerCase(), "a", " ");
+          _newAdd = resultItem.push("e", newFirstWord.toLowerCase(), "a", " ");
           newWord = resultItem.join("");
         }
         newResult.push(newWord);
