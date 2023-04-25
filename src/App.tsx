@@ -4,8 +4,7 @@ import "./App.css";
 function App() {
   const [text, setText] = useState<string>("Please enter your text");
   const [newText, setNewText] = useState<string | any>("");
-  const [err, setErr] = useState<string | any>('')
-
+  
   const getText = (e: any) => {
     setText(e.target.value);
     setNewText("");
