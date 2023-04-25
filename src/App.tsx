@@ -3,14 +3,14 @@ import "./App.css";
 
 function App() {
   const [text, setText] = useState<string>("Please enter your text");
-  const [newText, setNewText] = useState<string>("");
+  const [newText, setNewText] = useState<string | any>("");
 
-  const getText = (e) => {
+  const getText = (e: any) => {
     setText(e.target.value);
     setNewText("");
   };
 
-  const showResult = (e?): any => {
+  const showResult = (e?: any): any => {
     if (!!e) {
       e.preventDefault();
     }
@@ -18,14 +18,14 @@ function App() {
     let words: string[] = text.split(" ");
     let newResult: string[] = [];
 
-    words.map((item: string | string[]) => {
+    words.map((item: string | string[] | any) => {
       let newFirstWord: string = item[0];
-      let resultItem: string[] = item.toLowerCase().split("");
+      let resultItem: string[] | undefined  | any= item.toLowerCase().split("");
       let newWord: string;
 
       if (vowles.includes(newFirstWord)) {
-        const newAddSh: string[] = resultItem.unshift("Sh");
-        const newAddLoo: string[] = resultItem.push("e", "loo", " ");
+        resultItem.unshift("Sh");
+        resultItem.push("e", "loo", " ");
         newWord = resultItem.join("");
         newResult.push(newWord);
         console.log(newWord);
@@ -54,7 +54,7 @@ function App() {
       }
     });
 
-    setNewText(newResult);
+    setNewText(newResult.join(''));
   };
   useEffect(() => {
     showResult();
