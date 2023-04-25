@@ -19,11 +19,11 @@ function App() {
     let words: string[] = text.split(" ");
     let newResult: string[] = [];
 
-    console.log(words);
+    // console.log(words);
     if (words[words.length -1] == ""){
       words = words.filter(item => item !== "");
     }
-    console.log(words);
+    // console.log(words);
     
     words.map((item: string | string[] | any) => {
       let newFirstWord: string = item[0];
