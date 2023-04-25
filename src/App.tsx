@@ -4,6 +4,7 @@ import "./App.css";
 function App() {
   const [text, setText] = useState<string>("Please enter your text");
   const [newText, setNewText] = useState<string | any>("");
+  const [err, setErr] = useState<string | any>('')
 
   const getText = (e: any) => {
     setText(e.target.value);
@@ -18,9 +19,15 @@ function App() {
     let words: string[] = text.split(" ");
     let newResult: string[] = [];
 
+    console.log(words);
+    if (words[words.length -1] == ""){
+      words = words.filter(item => item !== "");
+    }
+    console.log(words);
+    
     words.map((item: string | string[] | any) => {
       let newFirstWord: string = item[0];
-      let resultItem: string[] | undefined  | any= item.toLowerCase().split("");
+      let resultItem: string[] | any = item.toLowerCase().split("");
       let newWord: string;
 
       if (vowles.includes(newFirstWord)) {
@@ -28,7 +35,7 @@ function App() {
         resultItem.push("e", "loo", " ");
         newWord = resultItem.join("");
         newResult.push(newWord);
-        console.log(newWord);
+        // console.log(newWord);
       } else {
         let _newRemove: string[] | any = resultItem.shift();
         let _newAdd: string[] | any;
@@ -43,18 +50,17 @@ function App() {
             " "
           );
           newWord = resultItem.join("");
-          console.log(newWord);
+          // console.log(newWord);
         } else {
           resultItem[0] = resultItem[0].toUpperCase();
           _newAdd = resultItem.push("e", newFirstWord.toLowerCase(), "a", " ");
           newWord = resultItem.join("");
         }
         newResult.push(newWord);
-        console.log(newWord,_newAdd,_newRemove);
+        // console.log(newWord,_newAdd,_newRemove);
       }
     });
-
-    setNewText(newResult.join(''));
+    setNewText(newResult.join(""));
   };
   useEffect(() => {
     showResult();
@@ -107,7 +113,7 @@ function App() {
               <p>{newText}</p>
               <button
                 className="text-gray-400 text-sm relative group p-1 rounded bg-slate-100 focus:outline-none "
-                onClick={() => navigator.clipboard.writeText(newText.join(""))}
+                onClick={() => navigator.clipboard.writeText(newText)}
               >
                 <span className="absolute -top-6 left-0 opacity-0 group-hover:opacity-100 ease-in-out duration-300">
                   Copy
