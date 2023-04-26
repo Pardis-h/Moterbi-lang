@@ -4,59 +4,103 @@ import "./App.css";
 function App() {
   const [text, setText] = useState<string>("Please enter your text");
   const [newText, setNewText] = useState<string | any>("");
+  const [lang, setLang] = useState<string>("en");
 
   const getText = (e: any) => {
     setText(e.target.value);
     setNewText("");
+
+    // check input language
+    if (/^[a-zA-Z]+$/.test(e.target.value)) {
+      setLang("en");
+    } else {
+      setLang("fa");
+    }
   };
 
   const showResult = (e?: any): any => {
     if (!!e) {
       e.preventDefault();
     }
-    const vowles: string[] = ["a", "A", "e", "E", "o", "O", "i", "I", "u", "U"];
+    const vowlesEn: string[] = [
+      "a",
+      "A",
+      "e",
+      "E",
+      "o",
+      "O",
+      "i",
+      "I",
+      "u",
+      "U",
+    ];
+    const vowlesFa: string[] = ["ا", "آ", "ی", "ي", "ع"];
     let words: string[] = text.split(" ");
     let newResult: string[] = [];
 
-    // console.log(words);
-    if (words[words.length -1] == ""){
-      words = words.filter(item => item !== "");
+    // check spaces
+    if (words[words.length - 1] == "") {
+      words = words.filter((item) => item !== "");
     }
-    // console.log(words);
-    
     words.map((item: string | string[] | any) => {
       let newFirstWord: string = item[0];
       let resultItem: string[] | any = item.toLowerCase().split("");
       let newWord: string;
 
-      if (vowles.includes(newFirstWord)) {
-        resultItem.unshift("Sh");
-        resultItem.push("e", "loo", " ");
-        newWord = resultItem.join("");
-        newResult.push(newWord);
-        // console.log(newWord);
-      } else {
-        let _newRemove: string[] | any = resultItem.shift();
-        let _newAdd: string[] | any;
-        if (resultItem[0] == "h") {
-          _newRemove = resultItem.shift();
-          resultItem[0] = resultItem[0].toUpperCase();
-          _newAdd = resultItem.push(
-            "e",
-            newFirstWord.toLowerCase(),
-            "h",
-            "a",
-            " "
-          );
+      if (lang == "en") {
+        if (vowlesEn.includes(newFirstWord)) {
+          resultItem.unshift("Sh");
+          resultItem.push("e", "loo", " ");
           newWord = resultItem.join("");
+          newResult.push(newWord);
           // console.log(newWord);
         } else {
-          resultItem[0] = resultItem[0].toUpperCase();
-          _newAdd = resultItem.push("e", newFirstWord.toLowerCase(), "a", " ");
-          newWord = resultItem.join("");
+          let _newRemove: string[] | any = resultItem.shift();
+          let _newAdd: string[] | any;
+          if (resultItem[0] == "h") {
+            _newRemove = resultItem.shift();
+            resultItem[0] = resultItem[0].toUpperCase();
+            _newAdd = resultItem.push(
+              "e",
+              newFirstWord.toLowerCase(),
+              "h",
+              "a",
+              " "
+            );
+            newWord = resultItem.join("");
+            // console.log(newWord);
+          } else {
+            resultItem[0] = resultItem[0].toUpperCase();
+            _newAdd = resultItem.push(
+              "e",
+              newFirstWord.toLowerCase(),
+              "a",
+              " "
+            );
+            newWord = resultItem.join("");
+          }
+          newResult.push(newWord);
+          console.log(newWord, _newAdd, _newRemove);
         }
-        newResult.push(newWord);
-        console.log(newWord,_newAdd,_newRemove);
+      } else {
+        if (vowlesFa.includes(newFirstWord)) {
+          resultItem.unshift("ش");
+          resultItem.push("ِ", "لو", " ");
+          newWord = resultItem.join("");
+          newResult.push(newWord);
+        } else {
+          let _newRemove: string[] | any = resultItem.shift();
+          let _newAdd: string[] | any;
+          
+          if(resultItem[0] == 'ا') resultItem[0] = 'آ';
+          if(!vowlesFa.includes(resultItem[0])){
+            resultItem.unshift("ا");
+          }
+          _newAdd = resultItem.push("ِ", newFirstWord, "ا", " ");
+          newWord = resultItem.join("");
+          newResult.push(newWord);
+          console.log(newWord, _newAdd, _newRemove);
+        }
       }
     });
     setNewText(newResult.join(""));
