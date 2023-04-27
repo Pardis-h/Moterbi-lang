@@ -73,7 +73,7 @@ function App() {
             newWord = resultItem.join("");
           }
           newResult.push(newWord);
-          console.log(newWord, _newAdd, _newRemove);
+          // console.log(newWord, _newAdd, _newRemove);
         }
       } else {
         if (vowlesFa.includes(newFirstWord)) {
