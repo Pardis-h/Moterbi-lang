@@ -4,10 +4,16 @@ import "./App.css";
 function App() {
   const [text, setText] = useState<string | any>("");
   const [newText, setNewText] = useState<string | any>("");
+  const [rtlDir, setRtlDir] = useState<boolean>(false);
 
   const getText = (e: any) => {
     setText(e.target.value);
     setNewText("");
+    if(/^[\u0600-\u06FF\s^]+$/.test(e.target.value)){
+      setRtlDir(true)
+    }else{
+      setRtlDir(false)
+    }
   };
 
   const showResult = (e?: any): any => {
@@ -27,6 +33,7 @@ function App() {
       "U",
     ];
     const vowlesFa: string[] = ["ا", "آ", "ی", "ي", "ع"];
+    // const specialChar : string[] = ['?','؟','.','!', '@','#','%','&', '*' , '(',')', '[',']',',','{','}']
     let words: string[] = text.split(" ");
     let newResult: string[] = [];
 
@@ -41,6 +48,7 @@ function App() {
 
       // check input language
       if (/^[a-zA-Z]+$/.test(item)) {
+        setRtlDir(false)
         if (vowlesEn.includes(newFirstWord)) {
           resultItem.unshift("Sh");
           resultItem.push("e", "loo", " ");
@@ -48,7 +56,6 @@ function App() {
           newResult.push(newWord);
         } else {
           resultItem.shift();
-
           if (resultItem[0] == "h") {
             resultItem.shift();
             resultItem[0] = resultItem[0].toUpperCase();
@@ -61,7 +68,10 @@ function App() {
           }
           newResult.push(newWord);
         }
-      } else {
+      }else if(/^[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?؟]/.test(item)){
+        newResult.push(item," ");
+      } else if(/^[\u0600-\u06FF\s^]+$/.test(item)){
+        setRtlDir(true)
         if (vowlesFa.includes(newFirstWord)) {
           resultItem.unshift("ش");
           resultItem.push("ِ", "لو", " ");
@@ -78,7 +88,7 @@ function App() {
           newWord = resultItem.join("");
           newResult.push(newWord);
         }
-      }
+      } 
     });
     setNewText(newResult.join(""));
   };
@@ -123,6 +133,7 @@ function App() {
                     showResult();
                   }
                 }}
+                style={rtlDir ? {direction: "rtl"}: {}}
                 className="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
               />
             </div>
