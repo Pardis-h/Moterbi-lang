@@ -92,7 +92,7 @@ function App() {
           _newAdd = resultItem.push("ِ", newFirstWord, "ا", " ");
           newWord = resultItem.join("");
           newResult.push(newWord);
-          console.log(newWord, _newAdd, _newRemove);
+          // console.log(newWord, _newAdd, _newRemove);
         }
       }
     });
@@ -115,7 +115,6 @@ function App() {
               translate :)
             </p>
           </div>
-          {/* <h1 className="text-3xl font-medium mb-6">Motrebi Language:</h1> */}
           <form
             className="mb-10 w-full lg:w-6/12 rounded-md shadow px-6 py-4"
             action=""
