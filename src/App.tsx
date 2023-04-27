@@ -2,20 +2,12 @@ import { useEffect, useState } from "react";
 import "./App.css";
 
 function App() {
-  const [text, setText] = useState<string>("Please enter your text");
+  const [text, setText] = useState<string | any>("");
   const [newText, setNewText] = useState<string | any>("");
-  const [lang, setLang] = useState<string>("en");
 
   const getText = (e: any) => {
     setText(e.target.value);
     setNewText("");
-
-    // check input language
-    if (/^[a-zA-Z]+$/.test(e.target.value)) {
-      setLang("en");
-    } else {
-      setLang("fa");
-    }
   };
 
   const showResult = (e?: any): any => {
@@ -47,7 +39,8 @@ function App() {
       let resultItem: string[] | any = item.toLowerCase().split("");
       let newWord: string;
 
-      if (lang == "en") {
+      // check input language
+      if (/^[a-zA-Z]+$/.test(item)) {
         if (vowlesEn.includes(newFirstWord)) {
           resultItem.unshift("Sh");
           resultItem.push("e", "loo", " ");
@@ -139,6 +132,7 @@ function App() {
                 id="text"
                 name="text"
                 value={text}
+                placeholder="Write here..."
                 onChange={getText}
                 onKeyDown={(e) => {
                   if (e.key === "Enter") {
