@@ -46,7 +46,6 @@ function App() {
           resultItem.push("e", "loo", " ");
           newWord = resultItem.join("");
           newResult.push(newWord);
-          // console.log(newWord);
         } else {
           let _newRemove: string[] | any = resultItem.shift();
           let _newAdd: string[] | any;
@@ -61,7 +60,6 @@ function App() {
               " "
             );
             newWord = resultItem.join("");
-            // console.log(newWord);
           } else {
             resultItem[0] = resultItem[0].toUpperCase();
             _newAdd = resultItem.push(
@@ -73,7 +71,6 @@ function App() {
             newWord = resultItem.join("");
           }
           newResult.push(newWord);
-          // console.log(newWord, _newAdd, _newRemove);
         }
       } else {
         if (vowlesFa.includes(newFirstWord)) {
@@ -92,7 +89,6 @@ function App() {
           _newAdd = resultItem.push("ِ", newFirstWord, "ا", " ");
           newWord = resultItem.join("");
           newResult.push(newWord);
-          // console.log(newWord, _newAdd, _newRemove);
         }
       }
     });
