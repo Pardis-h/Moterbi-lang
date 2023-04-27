@@ -47,27 +47,16 @@ function App() {
           newWord = resultItem.join("");
           newResult.push(newWord);
         } else {
-          let _newRemove: string[] | any = resultItem.shift();
-          let _newAdd: string[] | any;
+          resultItem.shift();
+
           if (resultItem[0] == "h") {
-            _newRemove = resultItem.shift();
+            resultItem.shift();
             resultItem[0] = resultItem[0].toUpperCase();
-            _newAdd = resultItem.push(
-              "e",
-              newFirstWord.toLowerCase(),
-              "h",
-              "a",
-              " "
-            );
+            resultItem.push("e", newFirstWord.toLowerCase(), "h", "a", " ");
             newWord = resultItem.join("");
           } else {
             resultItem[0] = resultItem[0].toUpperCase();
-            _newAdd = resultItem.push(
-              "e",
-              newFirstWord.toLowerCase(),
-              "a",
-              " "
-            );
+            resultItem.push("e", newFirstWord.toLowerCase(), "a", " ");
             newWord = resultItem.join("");
           }
           newResult.push(newWord);
@@ -79,14 +68,13 @@ function App() {
           newWord = resultItem.join("");
           newResult.push(newWord);
         } else {
-          let _newRemove: string[] | any = resultItem.shift();
-          let _newAdd: string[] | any;
-          
-          if(resultItem[0] == 'ا') resultItem[0] = 'آ';
-          if(!vowlesFa.includes(resultItem[0])){
+          resultItem.shift();
+
+          if (resultItem[0] == "ا") resultItem[0] = "آ";
+          if (!vowlesFa.includes(resultItem[0])) {
             resultItem.unshift("ا");
           }
-          _newAdd = resultItem.push("ِ", newFirstWord, "ا", " ");
+          resultItem.push("ِ", newFirstWord, "ا", " ");
           newWord = resultItem.join("");
           newResult.push(newWord);
         }
