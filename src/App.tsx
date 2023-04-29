@@ -202,7 +202,7 @@ function App() {
           >
             <div className="mb-4 flex items-center">
               <span className="leading-7 text-sm text-gray-600">
-                {changeLang ? "Persian" : "Motrebi"}
+                {changeLang ? "Farsi Or Finglish" : "Motrebi"}
               </span>
               <span
                 onClick={() => {
@@ -226,7 +226,7 @@ function App() {
                 </svg>
               </span>
               <span className="leading-7 text-sm text-gray-600">
-                {changeLang ? "Motrebi" : "Persian"}
+                {changeLang ? "Motrebi" : "Farsi Or Finglish"}
               </span>
             </div>
             <div className=" mb-4">
