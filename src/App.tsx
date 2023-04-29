@@ -96,7 +96,7 @@ function App() {
         let lastForthWord: string = item[item.length - 4];
         let lastWord: string = item[item.length - 1];
         // console.log(newFirstWord,secondWord,lastForthWord,lastThirdWord,lastSecondWord,lastWord);
-        
+
         // check input language
         if (/^[a-zA-Z]+$/.test(item)) {
           setRtlDir(false);
@@ -115,23 +115,31 @@ function App() {
             resultItem.pop();
             resultItem.pop();
             resultItem[0] = resultItem[0].toUpperCase();
+            resultItem.push(" ");
             newWord = resultItem.join("");
             newResult.push(newWord);
           } else {
-            if (lastSecondWord.toLowerCase() == "h" && (lastThirdWord.toLowerCase() == "s"  || lastThirdWord.toLowerCase() == "c" || lastThirdWord.toLowerCase() == "g")) {
-              resultItem.unshift(lastThirdWord,lastSecondWord)
+            if (
+              lastSecondWord.toLowerCase() == "h" &&
+              (lastThirdWord.toLowerCase() == "s" ||
+                lastThirdWord.toLowerCase() == "c" ||
+                lastThirdWord.toLowerCase() == "g")
+            ) {
+              resultItem.unshift(lastThirdWord, lastSecondWord);
               resultItem[0] = resultItem[0].toUpperCase();
               resultItem.pop();
               resultItem.pop();
               resultItem.pop();
               resultItem.pop();
+              resultItem.push(" ");
               newWord = resultItem.join("");
             } else {
-              resultItem.unshift(lastSecondWord)
+              resultItem.unshift(lastSecondWord);
               resultItem[0] = resultItem[0].toUpperCase();
               resultItem.pop();
               resultItem.pop();
               resultItem.pop();
+              resultItem.push(" ");
               newWord = resultItem.join("");
             }
             newResult.push(newWord);
@@ -140,19 +148,27 @@ function App() {
           newResult.push(item, " ");
         } else if (/^[\u0600-\u06FF\s^]+$/.test(item)) {
           setRtlDir(true);
-          if (vowlesFa.includes(newFirstWord)) {
-            resultItem.unshift("ش");
-            resultItem.push("ِ", "لو", " ");
+          if (
+            newFirstWord == "ش" &&
+            lastWord == "و" &&
+            lastSecondWord == "ل" &&
+            lastThirdWord == "ِ"
+          ) {
+            resultItem.shift();
+            resultItem.pop();
+            resultItem.pop();
+            resultItem.pop();
+            resultItem.push(" ");
             newWord = resultItem.join("");
             newResult.push(newWord);
           } else {
-            resultItem.shift();
-
-            if (resultItem[0] == "ا") resultItem[0] = "آ";
-            if (!vowlesFa.includes(resultItem[0])) {
-              resultItem.unshift("ا");
-            }
-            resultItem.push("ِ", newFirstWord, "ا", " ");
+            if (resultItem[0] == "ا") resultItem.shift();
+            if (resultItem[0] == "آ") resultItem[0] = "ا";
+            resultItem.unshift(lastSecondWord);
+            if (lastThirdWord == "ِ") resultItem.pop();
+            resultItem.pop();
+            resultItem.pop();
+            resultItem.push(" ");
             newWord = resultItem.join("");
             newResult.push(newWord);
           }
