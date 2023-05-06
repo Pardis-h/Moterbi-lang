@@ -1,8 +1,19 @@
 import { useEffect, useState } from "react";
 import "./App.css";
+import SpeechRecognition, {
+  useSpeechRecognition,
+} from "react-speech-recognition";
 
 function App() {
-  const [text, setText] = useState<string | any>("");
+  const {
+    transcript,
+    listening,
+    // resetTranscript,
+    browserSupportsSpeechRecognition,
+  } = useSpeechRecognition();
+  
+  // States
+  const [text, setText] = useState<string | any>(transcript);
   const [newText, setNewText] = useState<string | any>("");
   const [rtlDir, setRtlDir] = useState<boolean>(false);
   const [changeLang, setChangeLang] = useState<boolean>(true);
@@ -41,6 +52,7 @@ function App() {
       words = words.filter((item) => item !== "");
     }
 
+    // maping input
     words.map((item: string | string[] | any) => {
       let newFirstWord: string = item[0];
       let resultItem: string[] | any = item.toLowerCase().split("");
@@ -175,9 +187,13 @@ function App() {
         }
       }
     });
+
+    //set translate
     setNewText(newResult.join(""));
   };
 
+
+  // set DarkMode
   useEffect(() => {
     showResult();
     const darkLocal = localStorage.getItem("darkMode");
@@ -187,11 +203,31 @@ function App() {
       setIsDark(false);
     }
   }, []);
-
   const darkModeSave = () => {
     setIsDark(!isDark);
     localStorage.setItem("darkMode", JSON.stringify(!isDark));
   };
+
+  // Set mic
+  useEffect(() => {
+    listening && setText(transcript)
+    showResult();
+  }, [transcript]);
+
+  const startListening = () => {
+    setText(transcript);
+    showResult();
+    SpeechRecognition.startListening({
+      language: "fa-IR",
+      // grammer:
+      //   "#JSGF V1.0; grammar my-grammar; public <phrase> = اردیسِپا | افتر | من تِره غش;",
+    });
+  };
+
+  if (!browserSupportsSpeechRecognition) {
+    return <span>Browser doesn't support speech recognition.</span>;
+  }
+
   return (
     <>
       <section className={isDark ? "dark" : ""}>
@@ -278,7 +314,6 @@ function App() {
               </div>
               <div className=" mb-4">
                 <textarea
-                  // type="text"
                   cols={2}
                   rows={4}
                   id="text"
@@ -288,6 +323,7 @@ function App() {
                   onChange={getText}
                   autoFocus
                   onKeyDown={(e) => {
+                    // console.log('keydown');
                     if (e.key === "Enter") {
                       e.preventDefault();
                       showResult();
@@ -296,8 +332,43 @@ function App() {
                   style={rtlDir ? { direction: "rtl" } : {}}
                   className="w-full bg-white dark:bg-slate-500 rounded border border-gray-300 dark:border-slate-400  focus:border-indigo-500 dark:focus:border-indigo-700 focus:ring-2 focus:ring-indigo-200 dark:focus:ring-slate-500 text-base outline-none text-gray-700 dark:text-slate-200 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
                 />
+                {changeLang ? (
+                  <div className="flex items-center">
+                    <span
+                      onTouchStart={startListening}
+                      onMouseDown={startListening}
+                      onTouchEnd={SpeechRecognition.stopListening}
+                      onMouseUp={SpeechRecognition.stopListening}
+                      className="text-gray-400 dark:text-slate-400 text-sm relative group mt-2 mb-2 p-1 inline-block rounded-full bg-slate-100 dark:bg-slate-600 active:shadow
+                     hover:cursor-pointer"
+                    >
+                      <span className="absolute text-xs w-20 top-2 left-10 hidden group-hover:block ease-in-out duration-300">Hold to Talk</span>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={1.5}
+                        stroke="currentColor"
+                        className="w-6 h-6 group-hover:text-slate-600 dark:group-hover:text-slate-200"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="M12 18.75a6 6 0 006-6v-1.5m-6 7.5a6 6 0 01-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 01-3-3V4.5a3 3 0 116 0v8.25a3 3 0 01-3 3z"
+                        />
+                      </svg>
+                    </span>
+                    {/* <span>Microphone: {listening ? "on" : "off"}</span> */}
+                  </div>
+                ) : (
+                  ""
+                )}
               </div>
-              <button className="text-white bg-indigo-500 dark:bg-indigo-600 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 dark:hover:bg-indigo-700 rounded text-lg">
+
+              <button
+                type="submit"
+                className="text-white bg-indigo-500 dark:bg-indigo-600 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 dark:hover:bg-indigo-700 rounded text-lg"
+              >
                 Show
               </button>
               <div className="p-2 w-full pt-8 mt-8 border-t border-gray-200 dark:border-slate-400 flex justify-between items-center">
