@@ -8,10 +8,10 @@ function App() {
   const {
     transcript,
     listening,
-    // resetTranscript,
+    resetTranscript,
     browserSupportsSpeechRecognition,
   } = useSpeechRecognition();
-  
+
   // States
   const [text, setText] = useState<string | any>(transcript);
   const [newText, setNewText] = useState<string | any>("");
@@ -192,7 +192,6 @@ function App() {
     setNewText(newResult.join(""));
   };
 
-
   // set DarkMode
   useEffect(() => {
     showResult();
@@ -210,7 +209,7 @@ function App() {
 
   // Set mic
   useEffect(() => {
-    listening && setText(transcript)
+    listening && setText(transcript);
     showResult();
   }, [transcript]);
 
@@ -334,15 +333,35 @@ function App() {
                 />
                 {changeLang ? (
                   <div className="flex items-center">
-                    <span
-                      onTouchStart={startListening}
-                      onMouseDown={startListening}
-                      onTouchEnd={SpeechRecognition.stopListening}
-                      onMouseUp={SpeechRecognition.stopListening}
-                      className="text-gray-400 dark:text-slate-400 text-sm relative group mt-2 mb-2 p-1 inline-block rounded-full bg-slate-100 dark:bg-slate-600 active:shadow
-                     hover:cursor-pointer"
+                    {/* <p>Microphone: {listening ? "on" : "off"}</p> */}
+                    {listening ? (
+                      <span
+                        onClick={SpeechRecognition.stopListening}
+                        className=" text-green-300 dark:text-green-200 text-sm relative group mt-2 mb-2 p-1 inline-block rounded-full bg-slate-100 dark:bg-slate-600 active:shadow
+                                       hover:cursor-pointer"
+                      >
+                        <span className="absolute inset-0 w-full h-full border-2 rounded-full shadow border-green-300 animate-ping z-0"></span>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth={1.5}
+                          stroke="currentColor"
+                          className="w-6 h-6 group-hover:text-red-600 dark:group-hover:text-red-200 z-10"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M12 18.75a6 6 0 006-6v-1.5m-6 7.5a6 6 0 01-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 01-3-3V4.5a3 3 0 116 0v8.25a3 3 0 01-3 3z"
+                          />
+                        </svg>
+                      </span>
+                    ) : (
+                      <span
+                      onClick={startListening}
+                      className=" text-gray-400 dark:text-slate-400 text-sm relative group mt-2 mb-2 p-1 inline-block rounded-full bg-slate-100 dark:bg-slate-600 active:shadow
+                                     hover:cursor-pointer"
                     >
-                      <span className="absolute text-xs w-20 top-2 left-10 hidden group-hover:block ease-in-out duration-300">Hold to Talk</span>
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
@@ -358,7 +377,7 @@ function App() {
                         />
                       </svg>
                     </span>
-                    {/* <span>Microphone: {listening ? "on" : "off"}</span> */}
+                    )}
                   </div>
                 ) : (
                   ""
