@@ -8,7 +8,7 @@ function App() {
   const {
     transcript,
     listening,
-    resetTranscript,
+    // resetTranscript,
     browserSupportsSpeechRecognition,
   } = useSpeechRecognition();
 
@@ -202,6 +202,7 @@ function App() {
       setIsDark(false);
     }
   }, []);
+
   const darkModeSave = () => {
     setIsDark(!isDark);
     localStorage.setItem("darkMode", JSON.stringify(!isDark));
@@ -232,33 +233,15 @@ function App() {
       <section className={isDark ? "dark" : ""}>
         <div className="dark:bg-slate-800 min-h-screen">
           <div className="container mx-auto p-5 flex flex-col gap-5 justify-center items-center">
-            <div
-              className="flex items-start w-full lg:w-6/12 hover:cursor-pointer"
-              onClick={darkModeSave}
-            >
-              {isDark ? (
+            <div className="flex items-start w-full lg:w-6/12 hover:cursor-pointer">
+              <span className="relative flex items-start gap-1 bg-yellow-100 dark:bg-slate-500 rounded-full px-1 py-1 shadow-inner dark:shadow-slate-400 ">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
                   strokeWidth={1.5}
                   stroke="currentColor"
-                  className="w-8 h-8 bg-slate-500 text-white p-1 rounded-full"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z"
-                  />
-                </svg>
-              ) : (
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={1.5}
-                  stroke="currentColor"
-                  className="w-8 h-8 bg-yellow-200 p-1 rounded-full"
+                  className="w-8 h-8 bg-yellow-100 p-1 rounded-full dark:bg-transparent dark:text-transparent"
                 >
                   <path
                     strokeLinecap="round"
@@ -266,7 +249,22 @@ function App() {
                     d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z"
                   />
                 </svg>
-              )}
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className="w-8 h-8 bg-transparent dark:bg-slate-500 text-transparent dark:text-white p-1 rounded-full"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z"
+                  />
+                </svg>
+                <span onClick={darkModeSave} className="absolute w-8 h-8 dark:bg-slate-100 bg-slate-500 rounded-full z-10 dark:translate-x-0 translate-x-9 transition-transform duration-150 ease-linear"></span>
+              </span>
             </div>
             <div className="flex flex-col text-center w-full mb-8 ">
               <h1 className="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900 dark:text-slate-200">
@@ -358,25 +356,25 @@ function App() {
                       </span>
                     ) : (
                       <span
-                      onClick={startListening}
-                      className=" text-gray-400 dark:text-slate-400 text-sm relative group mt-2 mb-2 p-1 inline-block rounded-full bg-slate-100 dark:bg-slate-600 active:shadow
+                        onClick={startListening}
+                        className=" text-gray-400 dark:text-slate-400 text-sm relative group mt-2 mb-2 p-1 inline-block rounded-full bg-slate-100 dark:bg-slate-600 active:shadow
                                      hover:cursor-pointer"
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        strokeWidth={1.5}
-                        stroke="currentColor"
-                        className="w-6 h-6 group-hover:text-slate-600 dark:group-hover:text-slate-200"
                       >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M12 18.75a6 6 0 006-6v-1.5m-6 7.5a6 6 0 01-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 01-3-3V4.5a3 3 0 116 0v8.25a3 3 0 01-3 3z"
-                        />
-                      </svg>
-                    </span>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth={1.5}
+                          stroke="currentColor"
+                          className="w-6 h-6 group-hover:text-slate-600 dark:group-hover:text-slate-200"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M12 18.75a6 6 0 006-6v-1.5m-6 7.5a6 6 0 01-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 01-3-3V4.5a3 3 0 116 0v8.25a3 3 0 01-3 3z"
+                          />
+                        </svg>
+                      </span>
                     )}
                   </div>
                 ) : (
